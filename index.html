@@ -4,123 +4,380 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BEMO_US IND - Token Anak Bangsa</title>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #005f9e;
       --accent: #e6f0ff;
-      --dark-bg: #1a1a1a;
-      --dark-text: #f0f0f0;
+      --dark-bg: #121212; /* Sedikit lebih gelap */
+      --dark-text: #e0e0e0;
+      --secondary-dark-bg: #1e1e1e;
+      --transition-speed: 0.4s;
     }
     html {
       scroll-behavior: smooth;
     }
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #f9f9f9;
+      background-color: #f0f2f5; /* Background yang lebih terang dan modern */
       color: #333;
       margin: 0;
       padding: 0;
-      transition: background 0.3s, color 0.3s;
+      transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
+      overflow-x: hidden; /* Mencegah scroll horizontal yang tidak diinginkan */
     }
     body.dark-mode {
       background-color: var(--dark-bg);
       color: var(--dark-text);
     }
-    header {
-      background-color: var(--primary);
+    body.dark-mode .accordion,
+    body.dark-mode .roadmap-box {
+      background-color: var(--secondary-dark-bg);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    body.dark-mode footer {
+      background-color: var(--secondary-dark-bg);
+      color: var(--dark-text);
+    }
+    body.dark-mode .lang-btn, body.dark-mode .dark-btn {
+      background: var(--secondary-dark-bg);
+      color: var(--dark-text);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    body.dark-mode .lang-btn:hover, body.dark-mode .dark-btn:hover {
+      background: var(--primary);
       color: white;
-      padding: 20px;
+    }
+
+    /* Header dengan efek gelombang dan Parallax */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, #007bff 100%); /* Gradien yang lebih menarik */
+      color: white;
+      padding: 60px 20px 80px; /* Padding lebih besar */
       text-align: center;
       position: relative;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      min-height: 350px; /* Tinggi minimum untuk visual */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px; /* Untuk 3D transform */
     }
+    header::before, header::after { /* Dua lapisan gelombang untuk efek kedalaman */
+      content: '';
+      position: absolute;
+      bottom: -50px; /* Geser ke bawah agar gelombang terlihat */
+      left: 0;
+      width: 150%; /* Lebih lebar dari viewport */
+      height: 100px;
+      background: rgba(255, 255, 255, 0.08); /* Gelombang depan */
+      border-radius: 50% 50% 0 0;
+      transform-origin: center bottom;
+      animation: wavePrimary 15s linear infinite alternate;
+      z-index: 0;
+      filter: blur(1px); /* Sedikit blur untuk efek kedalaman */
+    }
+    header::after {
+      bottom: -70px; /* Gelombang belakang lebih rendah */
+      height: 120px;
+      background: rgba(255, 255, 255, 0.04); /* Gelombang belakang lebih transparan */
+      animation: waveSecondary 20s linear infinite alternate;
+      z-index: -1; /* Di belakang gelombang primer */
+      filter: blur(2px);
+    }
+
+    @keyframes wavePrimary {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-20%); }
+    }
+    @keyframes waveSecondary {
+      0% { transform: translateX(-10%); }
+      100% { transform: translateX(10%); }
+    }
+
     header img {
-      width: 100px;
-      margin-bottom: 10px;
+      width: 120px; /* Logo lebih besar */
+      margin-bottom: 20px;
+      animation: bounceIn 1s ease-out forwards; /* Animasi logo 'memantul' */
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.1); /* Border efek cahaya */
+      border-radius: 50%;
     }
+    @keyframes bounceIn {
+      0% { opacity: 0; transform: scale(0.3) translateY(-50px); }
+      60% { opacity: 1; transform: scale(1.05) translateY(10px); }
+      80% { transform: scale(0.95) translateY(-5px); }
+      100% { transform: scale(1) translateY(0); }
+    }
+
+    h1 {
+        font-family: 'Montserrat', sans-serif; /* Font judul lebih kuat */
+        font-size: 3em; /* Judul lebih besar */
+        margin: 0;
+        animation: slideInUpStagger 1s ease-out forwards;
+        opacity: 0;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    header p {
+        font-size: 1.2em;
+        margin-top: 10px;
+        animation: slideInUpStagger 1s ease-out forwards;
+        animation-delay: 0.3s; /* Delay untuk sub-judul */
+        opacity: 0;
+        max-width: 600px;
+        line-height: 1.5;
+    }
+    @keyframes slideInUpStagger {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+
     .language-switcher {
       position: absolute;
-      top: 20px;
-      right: 20px;
+      top: 25px; /* Sedikit geser ke bawah */
+      right: 25px;
       display: flex;
-      gap: 10px;
+      gap: 8px; /* Jarak antar tombol */
+      animation: fadeIn 1s ease-out forwards;
+      animation-delay: 0.8s;
+      opacity: 0;
+      z-index: 2; /* Pastikan di atas gelombang */
     }
     .lang-btn, .dark-btn {
-      background: white;
+      background: rgba(255, 255, 255, 0.9); /* Sedikit transparan */
+      color: var(--primary);
       border: none;
-      padding: 6px 10px;
+      padding: 10px 15px; /* Lebih nyaman dipencet */
       cursor: pointer;
-      font-size: 14px;
-      border-radius: 6px;
+      font-size: 15px;
+      border-radius: 25px; /* Bentuk pil */
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); /* Kurva transisi yang lebih hidup */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      font-weight: 600;
     }
+    .lang-btn:hover, .dark-btn:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-4px) scale(1.05); /* Efek melayang lebih jauh dan sedikit membesar */
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+    .lang-btn.active { /* Indikator bahasa aktif */
+        background: var(--primary);
+        color: white;
+    }
+
     section {
-      padding: 40px 20px;
-      max-width: 800px;
+      padding: 60px 20px; /* Padding section lebih besar */
+      max-width: 900px; /* Lebar konten lebih luas */
       margin: auto;
+      opacity: 0;
+      transform: translateY(40px); /* Jarak muncul lebih jauh */
+      transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
+    section.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
     h2 {
+      font-family: 'Montserrat', sans-serif;
       color: var(--primary);
       cursor: pointer;
-      margin-top: 20px;
-      transition: 0.2s;
+      margin-top: 40px; /* Jarak H2 dari elemen sebelumnya */
+      margin-bottom: 25px;
+      transition: color 0.3s ease, text-decoration 0.3s ease;
+      font-size: 2.5em; /* Judul section lebih besar */
+      position: relative;
+      display: inline-block; /* Agar underline sesuai teks */
+      padding-bottom: 10px;
+    }
+    h2::after { /* Animasi underline */
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 4px;
+        background-color: var(--primary);
+        transition: width 0.3s ease-out;
+    }
+    h2:hover::after {
+        width: 100%;
     }
     h2:hover {
-      text-decoration: underline;
+      color: #007bff;
     }
+
     .accordion {
       background: var(--accent);
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 20px;
+      border-radius: 12px; /* Sudut lebih membulat */
+      padding: 25px;
+      margin-bottom: 25px;
       display: none;
-      animation: fadeIn 0.4s ease-in-out;
+      animation: expandIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; /* Animasi buka/tutup yang lebih kompleks */
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* Bayangan lebih jelas */
+      overflow: hidden; /* Penting untuk animasi ketinggian */
     }
     .accordion.open {
       display: block;
     }
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(10px);}
-      to {opacity: 1; transform: translateY(0);}
+    /* Animasi untuk konten accordion saat terbuka */
+    @keyframes expandIn {
+      from { max-height: 0; opacity: 0; transform: translateY(10px); }
+      to { max-height: 1000px; opacity: 1; transform: translateY(0); } /* max-height tinggi agar konten bisa muat */
     }
+    /* Animasi untuk konten accordion saat ditutup (opsional, butuh JS) */
+    /* Untuk animasi penutupan yang lebih halus, kita perlu mengatur max-height secara dinamis di JS */
+
     .roadmap-box {
       background: var(--accent);
-      padding: 20px;
-      border-radius: 10px;
-      margin-top: 30px;
-      animation: fadeIn 0.6s ease-in-out;
+      padding: 25px;
+      border-radius: 12px;
+      margin-top: 35px;
+      animation: fadeInSlideIn 0.7s ease-out forwards;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      position: relative; /* Untuk elemen dekoratif */
+      overflow: hidden;
     }
+    .roadmap-box::before { /* Garis dekoratif vertikal */
+        content: '';
+        position: absolute;
+        left: 20px;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: var(--primary);
+        border-radius: 2px;
+        animation: drawLine 1s ease-out forwards;
+        animation-delay: 0.5s;
+    }
+    @keyframes drawLine {
+        from { transform: scaleY(0); }
+        to { transform: scaleY(1); }
+    }
+
     .roadmap-box h3 {
+      font-family: 'Montserrat', sans-serif;
       margin-top: 0;
       color: var(--primary);
+      font-size: 1.8em;
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      display: inline-block; /* Agar garis bawah sesuai lebar teks */
+      animation: slideInLeft 0.7s ease-out forwards;
+      opacity: 0;
     }
+    .roadmap-box ul {
+        list-style: none;
+        padding: 0;
+    }
+    .roadmap-box li {
+        position: relative;
+        padding-left: 35px; /* Ruang untuk ikon bullet kustom yang lebih besar */
+        margin-bottom: 15px;
+        line-height: 1.6;
+        font-size: 1.05em;
+        animation: fadeInSlideInItem 0.8s ease-out forwards;
+        opacity: 0;
+    }
+    .roadmap-box li::before {
+        content: '✓'; /* Tanda centang kustom yang lebih sederhana */
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 1.2em;
+        color: var(--primary);
+        font-weight: bold;
+    }
+    /* Staggered animation for roadmap items */
+    .roadmap-box:nth-child(1) li { animation-delay: 0.2s; }
+    .roadmap-box:nth-child(2) li { animation-delay: 0.4s; }
+    .roadmap-box:nth-child(3) li { animation-delay: 0.6s; }
+    .roadmap-box:nth-child(4) li { animation-delay: 0.8s; }
+
+    @keyframes fadeInSlideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideInLeft {
+        from { opacity: 0; transform: translateX(-30px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeInSlideInItem {
+        from { opacity: 0; transform: translateX(-15px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+
     footer {
       text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      background: #eee;
+      padding: 30px 20px;
+      font-size: 15px;
+      background: #e0e2e5; /* Warna footer yang lebih lembut */
+      color: #666;
+      margin-top: 60px;
+      box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+      border-top: 1px solid #ccc;
     }
+
+    /* Animasi Tombol Sosial Media dengan efek 'pulsate' */
     .social-buttons {
       position: fixed;
-      bottom: 20px;
-      left: 20px;
+      bottom: 30px; /* Geser sedikit ke atas */
+      left: 30px; /* Geser sedikit ke kanan */
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px; /* Jarak antar tombol */
+      z-index: 1000;
     }
     .social-buttons a {
-      background: #005f9e;
+      background: var(--primary);
       color: white;
-      width: 48px;
-      height: 48px;
+      width: 55px; /* Lebih besar lagi */
+      height: 55px;
       border-radius: 50%;
-      font-size: 20px;
+      font-size: 24px; /* Ikon lebih besar */
       text-align: center;
-      line-height: 48px;
+      line-height: 55px;
       text-decoration: none;
-      transition: background 0.3s;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+      animation: popInStagger 0.6s ease-out forwards;
+      opacity: 0;
     }
+    .social-buttons a:nth-child(1) { animation-delay: 0.2s; }
+    .social-buttons a:nth-child(2) { animation-delay: 0.3s; }
+    .social-buttons a:nth-child(3) { animation-delay: 0.4s; }
+    .social-buttons a:nth-child(4) { animation-delay: 0.5s; }
+
+    @keyframes popInStagger {
+        from { opacity: 0; transform: scale(0.6) rotate(-30deg); }
+        to { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+
     .social-buttons a:hover {
       background: #003d6b;
+      transform: scale(1.15) rotate(5deg) translateY(-5px); /* Efek rotasi dan melayang lebih menonjol */
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+    .social-buttons a:active { /* Efek saat diklik */
+        transform: scale(0.9) rotate(-5deg);
+    }
+
+    /* Responsif dasar */
+    @media (max-width: 768px) {
+        h1 { font-size: 2.2em; }
+        header p { font-size: 1em; }
+        h2 { font-size: 2em; }
+        .lang-btn, .dark-btn { padding: 8px 12px; font-size: 13px; }
+        .language-switcher { top: 15px; right: 15px; }
+        .social-buttons { bottom: 15px; left: 15px; gap: 8px; }
+        .social-buttons a { width: 45px; height: 45px; line-height: 45px; font-size: 20px; }
+        section { padding: 30px 15px; }
     }
   </style>
 </head>
@@ -130,8 +387,8 @@
     <h1>BEMO_US IND</h1>
     <p>Token Anak Bangsa, Terinspirasi dari Transportasi Legendaris Indonesia</p>
     <div class="language-switcher">
-      <button class="lang-btn" onclick="setLang('id')">ID</button>
-      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn active" data-lang="id" onclick="setLang('id')">ID</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
       <button class="dark-btn" onclick="toggleDarkMode()">🌓</button>
     </div>
   </header>
@@ -140,10 +397,10 @@
   <section id="roadmap"></section>
 
   <div class="social-buttons">
-    <a href="#" title="Twitter">🐦</a>
-    <a href="#" title="Telegram">💬</a>
-    <a href="https://wa.me/6281324542719" title="WhatsApp">📱</a>
-    <a href="https://www.geckoterminal.com/ton/pools/EQC4YkAYlfuSXzQmL3YtKk-o2DYasnVneEQ6Lwgyc0EwhGJ6",title="CoinGeko Terminal">📈</a> 
+    <a href="#" target="_blank" title="Twitter">🐦</a>
+    <a href="#" target="_blank" title="Telegram">💬</a>
+    <a href="https://wa.me/6281324542719" target="_blank" title="WhatsApp">📱</a>
+    <a href="https://www.geckoterminal.com/ton/pools/EQC4YkAYlfuSXzQmL3YtKk-o2DYasnVneEQ6Lwgyc0EwhGJ6" target="_blank" title="CoinGeko Terminal">📈</a>
   </div>
 
   <footer>
@@ -181,8 +438,7 @@
       ]
     };
 
-
-     const roadmapContent = {
+    const roadmapContent = {
       id: [
         { quarter: "Q1 2025", items: ["Peluncuran token BEMO_US IND di jaringan TON", "Pemrograman dan peluncuran smart contract pertama"] },
         { quarter: "Q2 2025", items: ["Pembentukan dan pengembangan komunitas (Twitter, Telegram)", "Pemasaran dan kolaborasi dengan influencer blockchain Indonesia"] },
@@ -197,20 +453,28 @@
       ]
     };
 
-
     let currentLang = "id";
 
     function renderWhitepaper() {
       const container = document.getElementById("whitepaper");
-      container.innerHTML = "";
+      container.innerHTML = '<h2 id="whitepaper-title">Whitepaper</h2>'; // Tambah ID pada H2
       whitepaperContent[currentLang].forEach((item, index) => {
         const title = document.createElement("h2");
         title.textContent = item.title;
+        title.className = "accordion-header"; // Menambahkan kelas untuk identifikasi
         const content = document.createElement("div");
         content.className = "accordion";
         content.innerHTML = item.text;
 
-        title.onclick = () => content.classList.toggle("open");
+        title.onclick = () => {
+          content.classList.toggle("open");
+          // Tambahan: scroll ke bagian yang terbuka agar terlihat jelas
+          if (content.classList.contains('open')) {
+            setTimeout(() => {
+              title.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300); // Penundaan sedikit agar animasi sempat berjalan
+          }
+        };
 
         container.appendChild(title);
         container.appendChild(content);
@@ -219,16 +483,17 @@
 
     function renderRoadmap() {
       const roadmap = document.getElementById("roadmap");
-      roadmap.innerHTML = '<h2>Roadmap</h2>';
+      roadmap.innerHTML = '<h2 id="roadmap-title">Roadmap</h2>'; // Tambah ID pada H2
       roadmapContent[currentLang].forEach(item => {
         const box = document.createElement("div");
         box.className = "roadmap-box";
         const title = document.createElement("h3");
         title.textContent = item.quarter;
         const ul = document.createElement("ul");
-        item.items.forEach(point => {
+        item.items.forEach((point, index) => {
           const li = document.createElement("li");
           li.textContent = point;
+          li.style.animationDelay = `${index * 0.1 + 0.2}s`; // Staggered delay untuk item list
           ul.appendChild(li);
         });
         box.appendChild(title);
@@ -241,16 +506,74 @@
       currentLang = lang;
       renderWhitepaper();
       renderRoadmap();
+      updateLangButtons(); // Perbarui status tombol aktif
+      checkSectionsVisibility();
+    }
+
+    function updateLangButtons() {
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        if (btn.dataset.lang === currentLang) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
     }
 
     function toggleDarkMode() {
       document.body.classList.toggle("dark-mode");
     }
 
-    // Init
-    renderWhitepaper();
-    renderRoadmap();
+    // Fungsi untuk mengelola animasi saat scroll
+    function checkSectionsVisibility() {
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            const sectionTop = section.getBoundingClientRect().top;
+            const viewportHeight = window.innerHeight;
+            // Jika bagian masuk ke dalam viewport (sekitar 20% dari bawah viewport)
+            if (sectionTop < viewportHeight * 0.80) {
+                section.classList.add('visible');
+            } else {
+                section.classList.remove('visible'); // Hilangkan kelas jika keluar dari viewport
+            }
+        });
+
+        // Animasi untuk judul Whitepaper dan Roadmap
+        const whitepaperTitle = document.getElementById('whitepaper-title');
+        const roadmapTitle = document.getElementById('roadmap-title');
+
+        if (whitepaperTitle) {
+            const titleTop = whitepaperTitle.getBoundingClientRect().top;
+            if (titleTop < viewportHeight * 0.85) {
+                whitepaperTitle.style.animation = 'slideInLeft 0.7s ease-out forwards';
+                whitepaperTitle.style.opacity = 0; // Atur opacity awal
+            } else {
+                whitepaperTitle.style.animation = 'none';
+                whitepaperTitle.style.opacity = 0; // Sembunyikan jika keluar
+            }
+        }
+        if (roadmapTitle) {
+            const titleTop = roadmapTitle.getBoundingClientRect().top;
+            if (titleTop < viewportHeight * 0.85) {
+                roadmapTitle.style.animation = 'slideInLeft 0.7s ease-out forwards';
+                roadmapTitle.style.opacity = 0;
+            } else {
+                roadmapTitle.style.animation = 'none';
+                roadmapTitle.style.opacity = 0;
+            }
+        }
+    }
+
+    // Event listener untuk scroll
+    window.addEventListener('scroll', checkSectionsVisibility);
+
+    // Inisialisasi saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', () => {
+      renderWhitepaper();
+      renderRoadmap();
+      updateLangButtons(); // Set active button on load
+      checkSectionsVisibility(); // Jalankan sekali saat dimuat untuk bagian yang sudah terlihat
+    });
   </script>
 </body>
 </html>
-
